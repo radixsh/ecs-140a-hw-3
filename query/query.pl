@@ -14,11 +14,15 @@ lotr_fans(Fan) :-
     fan(Fan, Titles),
     member(the_lord_of_the_rings, Titles).
 
+any_in(First, Second) :-
+    member(Thing, First),
+    member(Thing, Second).
+
 /* Authors of the novels owned by Chandler */
 author_names(Author) :-
-    author(Author, Things_written),
+    author(Author, Written),
     fan(chandler, Titles),
-    member(Things_written, Titles).
+    any_in(Written, Titles).
 
 /* Characters who are fans of Brandon Sanderson's novels */
 fans_names(Fan) :-
