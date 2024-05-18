@@ -3,8 +3,31 @@
 
 % If Set1 and Set2 are not disjoint sets, then the union will have duplicates.
 isUnion(Set1, Set2, Union) :-
-    append(Set1, Set2, Union).
+    member(Element1, Set1),
+    member(Element1, Union),
+    member(Element2, Set1),
+    member(Element2, Union),
+    all_members_in(Set1, Set2, Union).
+    % no_extras(Set1, Set2, Union).
+% append(Set1, Set2, Union).
 
+all_members_in([], [SetH | SetT], Union) :-
+    member(SetH, Union),
+    all_members_in([], SetT, Union).
+
+all_members_in([SetH | SetT], [], Union) :-
+    member(SetH, Union),
+    all_members_in([], SetT, Union).
+
+all_members_in([Set1H | Set1T], [Set2H | Set2T], Union) :-
+    (Set1H = ""; member(Set1H, Union)),
+    (Set2H = ""; member(Set2H, Union)),
+    all_members_in(Set1T, Set2T, Union).
+
+% no_extras([Set1H | Set1T], [Set2H | Set2T], Union) :-
+%     (Set1H = ""; member(Set1H, Union)),
+%     (Set2H = ""; member(Set2H, Union)),
+%     no_extras(Set1T, Set2T, Union).
 
 
 % Doesn't detect cases where the 3rd parameter (an array) is missing some
