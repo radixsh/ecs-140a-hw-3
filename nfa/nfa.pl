@@ -1,3 +1,6 @@
-reachable(StartState, FinalState, Input) :-
-    %% remove fail and add body/other cases for this predicate
-    fail.
+reachable(StartState, FinalState, []) :-
+    StartState = FinalState.
+
+reachable(StartState, FinalState, [InputH | InputT]) :-
+    transition(StartState, NextState, InputH),
+    reachable(NextState, FinalState, InputT).
