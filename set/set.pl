@@ -2,13 +2,14 @@
 % https://stackoverflow.com/questions/19610734/prolog-support-for-vim-users#19611055
 
 % If Set1 and Set2 are not disjoint sets, then the union will have duplicates.
+isUnion([], Set2, Set2).
 isUnion([Set1H | Set1T], Set2, Union) :-
     isUnion(Set1T, Set2, TempUnion),
-    add(Set1H, TempUnion).
+    add(Set1H, TempUnion, Union).
 
-add(X, L, L) :-
-    member(X, L), !.
-add(X, L, [X|L]).
+add(Element, L, L) :-
+    member(Element, L).
+add(Element, L, [Element | L]).
 
 
 % Doesn't detect cases where the 3rd parameter (an array) is missing some
