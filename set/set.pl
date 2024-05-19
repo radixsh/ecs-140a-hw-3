@@ -12,7 +12,6 @@ add(Element, Set, [Element | Set]).
 
 
 isIntersection([], _, []).
-isIntersection(_, [], []).
 isIntersection([H|T], Set2, Intersection) :- 
     isIntersection(T, Set2, TempIntersection),
     member(H, Set2), 
