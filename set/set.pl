@@ -17,10 +17,9 @@ isIntersection([H|T], Set2, Intersection) :-
     isIntersection(T, Set2, TempIntersection),
     member(H, Set2), 
     add(H, TempIntersection, Intersection).
-isIntersection(Set1, [H|T], Intersection) :- 
-    isIntersection(Set1, T, TempIntersection),
-    member(H, Set1), 
-    add(H, TempIntersection, Intersection).
+isIntersection([H|T], Set2, Intersection) :- 
+    \+ member(H, Set2),
+    isIntersection(T, Set2, Intersection).
 
 
 isEqual([], []).
