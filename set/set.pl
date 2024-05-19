@@ -1,24 +1,27 @@
 % File must start with a comment to be interpreted as Prolog not Perl 
 % https://stackoverflow.com/questions/19610734/prolog-support-for-vim-users#19611055
 
-% If Set1 and Set2 are not disjoint sets, then the union will have duplicates.
 isUnion([], Set2, Set2).
-isUnion([Set1H | Set1T], Set2, Union) :-
-    isUnion(Set1T, Set2, TempUnion),
-    add(Set1H, TempUnion, Union).
+isUnion([H|T], Set2, Union) :-
+    isUnion(T, Set2, TempUnion),
+    add(H, TempUnion, Union).
 
-add(Element, L, L) :-
-    member(Element, L).
-add(Element, L, [Element | L]).
+add(Element, Set, Set) :-
+    member(Element, Set).
+add(Element, Set, [Element | Set]).
 
 
-% Doesn't detect cases where the 3rd parameter (an array) is missing some
-% elements the sets share.
-isIntersection([], [], []).
-isIntersection(Set1, Set2, Intersection) :- 
-    member(Element, Set1),
-    member(Element, Set2),
-    append([], Element, Intersection).
+isIntersection([], _, []).
+isIntersection(_, [], []).
+isIntersection([H|T], Set2, Intersection) :- 
+    isIntersection(T, Set2, TempIntersection),
+    member(H, Set2), 
+    add(H, TempIntersection, Intersection).
+isIntersection(Set1, [H|T], Intersection) :- 
+    isIntersection(Set1, T, TempIntersection),
+    member(H, Set1), 
+    add(H, TempIntersection, Intersection).
+
 
 isEqual([], []).
 isEqual(Set1,Set2) :-
